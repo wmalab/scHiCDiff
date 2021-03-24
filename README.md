@@ -30,11 +30,11 @@ require(gamlss)
 
 
 ```
-data.file <- 
-
-
-
-
+data.file <- "path/sim.test.data"
+simRes <- scHiCDiff.sim(data.file,fold.change=5)
+simRes$Hic1.sim
+SimRes$Hic2.sim
+SimRes$diff.sim
 ```
 
 
