@@ -5,10 +5,40 @@ We presented a novel statistical method scHiCDiff to detect differential chromat
 
 # Installation
 
-The source code can be performed under R language version 4.0.2 with the installation of packages Matrix, mvtnorm, rasterVis, gridExtra, HiTC, edgeR, ggsci, HiCcompare, pscl, VGAM, maxLik, countreg, gamlss.
+To accelerate data processing and use as less memory as possible, scHiCDiff requires the Matrix pacakges. For specific Hi-C data processing, we tend to use the HiTC, HiCcompare pacakges. In addition, to fit the regression models, we also need the R packages ggsci, VGAM etc.
+
+Thus, with the installation of packages Matrix, mvtnorm, HiTC, HiCcompare, edgeR, ggsci, pscl, VGAM, maxLik, countreg and gamlss, the source code can be performed under R language version 4.0.2.
+
+```
+require(Matrix)
+require(mvtnorm)
+require(HiTC)
+require(HiCcompare)
+require(edgeR)
+require(ggsci)
+require(pscl)
+require(VGAM)
+require(maxLik)
+require(countreg)
+require(gamlss)
+```
 
 
-# Sample example
+# Sample examples
+
+## generate simulated scHi-Cs
+
+
+```
+data.file <- 
+
+
+
+
+```
+
+
+## find differential chromatin interactions (DCIs) in real data
 
 The data getting from chr11 of oocyte and zygote cells with resolution=200kb (Flyamer et.al.) were untilized as sample data. In the sample data file, it lists all bin pairs with at least one non-zero counts in one of cell types. The first two columns represent the interacting region of each listed bin pair, then followed 86 columns denote the normalized read counts for oocyte cells and the last 34 columns denote the normalized read counts for zygote cells. 
 
@@ -19,4 +49,8 @@ group <- factor(c(rep(1,86), rep(2,34)))
 result.nb <- scHiCDiff.NB(count.table,group)
 result.zinb <- scHiCDiff.ZINB(count.table,group)
 result.nbh <- scHiCDiff.NBH(count.table,group)
+
+result.nb[1:5,]
+result.zinb[1:5,]
+result.nbh[1:5,]
 ```
