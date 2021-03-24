@@ -32,12 +32,12 @@ scHiCDiff.sim <- function(file.path,fold.change,pDiff=0.01,noise.prop=0.9){
   
 library(Matrix)
 library(mvtnorm)
-library(rasterVis)
-library(gridExtra)
+#library(rasterVis)
+#library(gridExtra)
 library(HiTC)
 library(edgeR)
 library(ggsci)
-  library(HiCcompare)
+library(HiCcompare)
 
 #step1 merge the data from single cells to get a pseudo-bulk data
 merge.data <- function(rawHiC.path,rawHiC.path2,noise.prop){
