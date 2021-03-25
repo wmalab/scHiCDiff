@@ -28,7 +28,7 @@ require(gamlss)
 
 ## Generate simulated scHi-Cs
 
-The simulation test data is a dataset with 8 single-cells getting from chr1 of Diploid ESC cultured with 2i in Nagano et al.  with resolution=200kb. were untilized as sample data. In the sample data file, it lists all bin pairs with at least one non-zero counts in one of cell types. The first two columns represent the interacting region of each listed bin pair, then followed 86 columns denote the normalized read counts for oocyte cells and the last 34 columns denote the normalized read counts for zygote cells. 
+The simulation test data is a dataset with 8 single-cells getting from chr1 of Diploid ESC cultured with 2i in Nagano et al. with resolution=200kb.
 ```
 data.file <- "path/sim.test.data"
 simRes <- scHiCDiff.sim(data.file,fold.change=5)
@@ -74,7 +74,35 @@ result.nb <- scHiCDiff.NB(count.table,group)
 result.zinb <- scHiCDiff.ZINB(count.table,group)
 result.nbh <- scHiCDiff.NBH(count.table,group)
 
-result.nb[1:5,]
-result.zinb[1:5,]
-result.nbh[1:5,]
 ```
+### Input
+
+```
+count.table      A non-negative  matrix of scHi-C normalized read counts.The rows of the 
+                 matrix are bin pair and columns are samples/cells.
+group            A vector of factor which mentions the two condition to be compared, 
+                 corresponding to the columns in the count table.
+```
+
+### Output
+
+returns a data frame containing the differential chromatin interaction (DCI) analysis results, rows are bin pairs and columns contain the following items:
+
+```
+bin_1,bin_2          The interacting region of the bin pair.
+mu_1,mu_2,           MLE of the parameters of NB/ZINB/NBH of group 1 and group 2,
+theta_1,theta_2      where mu and theta represent the mean and dispersion estimate of
+(pi_1,pi_2)          negative binomial, pi denotes the estimate of zero percentange
+norm_total_mean_1,   Mean of normalized read counts of group 1 and group 2.
+norm_total_mean_2
+norm_foldChange      norm_total_mean_1/norm_total_mean_2.
+chi2LR1              Chi-square statistic for hypothesis testing of H0.
+pvalue               P value of hypothesis testing of H0 (underlying whether a bin pair 
+                     is a DCI).
+pvalue.adj.FDR       Adjusted P value of H0's pvalue using Benjamini & Hochberg's method.
+Remark               Record of abnormal program information.
+```
+
+
+
+
