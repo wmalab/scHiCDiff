@@ -15,9 +15,12 @@
 #' containing the first interacting region of the bin pair, the second interacting region 
 #' of the bin pair and the interaction frequency of the bin pair.
 #' @param fold.change double. The amount of fold change.
-#' @param pDiff double. The probability that an interaction will be diffrential.
-#' @param noise.prop double. Remove interactions that show
-#'  a dispersion value larger than this value.
+#' @param resolution double. The resolution of singel-cell HiC data, eg:200kb will input 200,000
+#' @param sample.num double. The number of single cells tending to generate in each condition.
+#' (<= the number of inputted singel cells)
+#' @param pDiff double. The probability that an interaction will be differential.
+#'
+#'
 #'
 #' Output: a list that contains the simulated replicates and the
 #' matrix of the true DCI regions.
@@ -28,7 +31,7 @@
 #'
 
 
-scHiCDiff.sim <- function(file.path,fold.change,pDiff=0.01,noise.prop=0.9){
+scHiCDiff.sim <- function(file.path,fold.change,resolution,sample.num,pDiff=0.01){
   
 library(Matrix)
 library(mvtnorm)
@@ -40,12 +43,13 @@ library(ggsci)
 library(HiCcompare)
 
 #step1 merge the data from single cells to get a pseudo-bulk data
-merge.data <- function(rawHiC.path,rawHiC.path2,noise.prop){
+merge.data <- function(rawHiC.path,rawHiC.path2,resolution,noise.prop=0.9){
   count <- c()
   for(j in 1:length(rawHiC.path)){
     if(j==1){
       dat1 <- read.table(rawHiC.path[1])
       dat1 <- as.matrix(dat1)
+      dat1[,1:2] <- dat1[,1:2]/resolution+1
       dat1 <- cbind(dat1[,1],dat1[,2],dat1[,3])
       chr.length1 <- max(dat1[,1:2])
       hic.table1 <- matrix(0,nrow=chr.length1,ncol=chr.length1)
@@ -57,6 +61,7 @@ merge.data <- function(rawHiC.path,rawHiC.path2,noise.prop){
     }else{
       dat2 <- read.table(rawHiC.path[j])
       dat2 <- as.matrix(dat2)
+      dat2[,1:2] <- dat2[,1:2]/resolution+1
       dat2 <- cbind(dat2[,1],dat2[,2],dat2[,3])
       chr.length2 <- max(dat2[,1:2])
       hic.table2 <- matrix(0,nrow=chr.length2,ncol=chr.length2)
@@ -85,10 +90,12 @@ merge.data <- function(rawHiC.path,rawHiC.path2,noise.prop){
     if(j==1){
       dat1 <- read.table(rawHiC.path2[1])
       dat1 <- as.matrix(dat1)
+      dat1[,1:2] <- dat1[,1:2]/resolution+1
       aa1 <- dat1[,1]*10000+dat1[,2]
     }else{
       dat2 <- read.table(rawHiC.path2[j])
       dat2 <- as.matrix(dat2)
+      dat2[,1:2] <- dat2[,1:2]/resolution+1
       aa2 <- dat2[,1]*10000+dat2[,2]
       posi <- which(!aa2 %in% aa1)
       if(length(posi)!=0){
@@ -199,10 +206,14 @@ downsampling <- function(object,p.prop){
 #simuluation process
 filename <- dir(file.path)
 filename1 <- c()
-for(i in 1:length(filename)){
-  filename1[i] <- paste(file.path,filename[i],sep="/")
-}
-step.11 <- merge.data(rawHiC.path=filename1,rawHiC.path2=filename1,noise.prop=noise.prop)
+  if(length(filename)>(sample.num-1)){
+    sim.sample <- sample(length(filename),sample.num, replace=FALSE)
+for(i in 1:sample.num){
+  filename1[i] <- paste(file.path,filename[sim.sample[i],sep="/")
+   }
+   }else{
+   stop(paste("The number of input cells is not sufficient to generate",sample.num," single cells.\n"), call. = FALSE) } 
+step.11 <- merge.data(rawHiC.path=filename1,rawHiC.path2=filename1,resolution=resolution)
 step.22 <- generate.simulation(step.11$hic.merge.data,pDiff=pDiff,foldDiff=fold.change)
 step.33 <- downsampling(step.22,p.prop=step.11$p.prop)
 Hic1.sim <- step.33$Hic1.sim
