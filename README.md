@@ -86,7 +86,7 @@ group            A vector of factor which mentions the two condition to be compa
 
 ### Output
 
-returns a data frame containing the differential chromatin interaction (DCI) analysis results, rows are bin pairs and columns contain the following items:
+return a data frame containing the differential chromatin interaction (DCI) analysis results, rows are bin pairs and columns contain the following items:
 
 ```
 bin_1,bin_2          The interacting region of the bin pair.
