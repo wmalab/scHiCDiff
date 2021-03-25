@@ -30,7 +30,7 @@ require(gamlss)
 
 The simulation test data is a dataset with 8 single-cells getting from chr1 of Diploid ESC cultured with 2i in Nagano et al. with resolution=200kb.
 ```
-data.file <- "path/sim.test.data"
+data.file <- "path/sampledata/sim.test.data"
 simRes <- scHiCDiff.sim(data.file,fold.change=5)
 ```
 
@@ -67,7 +67,7 @@ diff.sim        A sparceMatric containing the position of the differential inter
 The data getting from chr11 of oocyte and zygote cells with resolution=200kb (Flyamer et.al.) were untilized as sample data. In the sample data file, it lists all bin pairs with at least one non-zero counts in one of cell types. The first two columns represent the interacting region of each listed bin pair, then followed 86 columns denote the normalized read counts for oocyte cells and the last 34 columns denote the normalized read counts for zygote cells. 
 
 ```
-count.table <- read.table(paste("path/oocyte.zygote.filtered.chr11.txt")
+count.table <- read.table(paste("path/sampledata/oocyte.zygote.filtered.chr11.txt")
 count.table <- as.matrix(count.table)
 group <- factor(c(rep(1,86), rep(2,34)))
 result.nb <- scHiCDiff.NB(count.table,group)
