@@ -26,20 +26,43 @@ require(gamlss)
 
 # Sample examples
 
-## generate simulated scHi-Cs
+## Generate simulated scHi-Cs
 
-
+The simulation test data is a dataset with 8 single-cells getting from chr1 of Diploid ESC cultured with 2i in Nagano et al.  with resolution=200kb. were untilized as sample data. In the sample data file, it lists all bin pairs with at least one non-zero counts in one of cell types. The first two columns represent the interacting region of each listed bin pair, then followed 86 columns denote the normalized read counts for oocyte cells and the last 34 columns denote the normalized read counts for zygote cells. 
 ```
 data.file <- "path/sim.test.data"
 simRes <- scHiCDiff.sim(data.file,fold.change=5)
-
-simRes$Hic1.sim
-SimRes$Hic2.sim
-SimRes$diff.sim
 ```
 
+### Input
 
-## find differential chromatin interactions (DCIs) in real data
+```
+file.path       The pathway of single cell files. All scHi-C data used in simulation
+                should be stored in this pathway. Each scHi-C file is performed as 
+                three-column format containing the first interacting region of the bin 
+                pair, the second interacting region of the bin pair and the interaction 
+                frequency of the bin pair.
+fold.change     The amount of fold change.
+resolution      The resolution of singel-cell HiC data, eg:200kb will input 200,000
+sample.num      The number of single cells tending to generate in each condition.
+                (<= the number of inputted singel cells)
+pDiff           The probability that an interaction will be differential.
+```
+
+### Output
+
+return a list that contains the simulated replicates and the matrix of the true DCI regions.
+
+
+The list contains the following elements:
+
+```
+Hic1.sim        A list containing the simulated scHi-C matrices of the first condition.
+Hic2.sim        A list containing the simulated scHi-C matrices of the second condition.
+diff.sim        A sparceMatric containing the position of the differential interactions.
+```
+
+## Find differential chromatin interactions (DCIs) in real data
 
 The data getting from chr11 of oocyte and zygote cells with resolution=200kb (Flyamer et.al.) were untilized as sample data. In the sample data file, it lists all bin pairs with at least one non-zero counts in one of cell types. The first two columns represent the interacting region of each listed bin pair, then followed 86 columns denote the normalized read counts for oocyte cells and the last 34 columns denote the normalized read counts for zygote cells. 
 
