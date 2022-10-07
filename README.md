@@ -1,6 +1,6 @@
 # scHiCDiff
 
-scHiCDiff is a novel statistical algorithm to detect differential chromatin interactions (DCIs) between two Hi-C experiments at single-cell level. Here, we introduced 5 ways to capture the DCIs: two non-parametric tests (Kolmogorov–Smirnov test/ Cramér-von Mises test) and parametric likelihood ratio test with three regression models (Negative Binomial/ Zero-inflated Negative Binomial/ Negative Binomial Hurdle). Non-parametric tests are advantageous by allowing us detecting DCIs without any assumption on data distribution; negative binomial(NB) is the most common assumption for interaction counts in bulk Hi-C parametric approaches, while zero-inflated Negative Binomial(ZINB) and Negative Binomial Hurdle (NBH) regression models are specially designated for the interaction comparison at single-cell level by taking the excessive zeros feature into consideration.
+scHiCDiff is a novel statistical algorithm to detect differential chromatin interactions (DCIs) between two Hi-C experiments at single-cell level. Here, we introduced 5 ways to capture the DCIs: two non-parametric tests (Kolmogorov–Smirnov test/ Cramér-von Mises test) and parametric likelihood ratio test with three regression models (Negative Binomial/ Zero-inflated Negative Binomial). Non-parametric tests are advantageous by allowing us detecting DCIs without any assumption on data distribution; negative binomial(NB) is the most common assumption for interaction counts in bulk Hi-C parametric approaches, while zero-inflated Negative Binomial(ZINB) regression models is specially designated for the interaction comparison at single-cell level by taking the excessive zeros feature into consideration.
 
 
 # Installation
@@ -28,7 +28,7 @@ require(twosamples)
 
 # Usage
 
-The functions in scHiCDiff can be classified as two types: The first type is the simulation function (scHiCDiff.sim) and the other type is the detection function (scHiCDiff.KS, scHiCDiff.CVM, scHiCDiff.NB, scHiCDiff.ZINB and scHiCDiff.NBH). 
+The functions in scHiCDiff can be classified as two types: The first type is the simulation function (scHiCDiff.sim) and the other type is the detection function (scHiCDiff.KS, scHiCDiff.CVM, scHiCDiff.NB and scHiCDiff.ZINB). 
 
 ## Simulation Function
 
@@ -115,7 +115,6 @@ result.ks <- scHiCDiff.KS(count.table,group)
 result.cvm <- scHiCDiff.CVM(count.table,group)
 result.nb <- scHiCDiff.NB(count.table,group)
 result.zinb <- scHiCDiff.ZINB(count.table,group)
-result.nbh <- scHiCDiff.NBH(count.table,group)
 ```
 
 
