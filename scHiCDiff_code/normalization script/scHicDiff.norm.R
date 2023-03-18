@@ -37,6 +37,7 @@ scHicNorm <- function(bias.info.path,dat_HiC,method.num=6,diag.log=FALSE){
   library(pscl)
   library(MASS)
   library(HiCcompare)
+  library(soundgen)
   # read data 
   dat_feature <- read.table(bias.info.path)
   names(dat_feature) <- c("binStart", "binEnd", "density", "GC", "map")
@@ -44,6 +45,10 @@ scHicNorm <- function(bias.info.path,dat_HiC,method.num=6,diag.log=FALSE){
     stop("The number of rows from the first two input files is not the same.\n", call. = FALSE)
   }
   chr.length <- nrow(dat_feature)
+  dat_HiC <- ceiling(gaussianSmooth2D(dat_HiC,kernelSize = 3))
+  colnames(dat_HiC) <- 1:nrow(dat_HiC)
+  rownames(dat_HiC) <- 1:nrow(dat_HiC)
+gc()
   # determine the method
   methods <- c("Poisson", "NB", "ZIP", "ZINB", "PH", "NBH")
   method <- methods[method.num]
@@ -135,5 +140,4 @@ scHicNorm <- function(bias.info.path,dat_HiC,method.num=6,diag.log=FALSE){
 
  return(res2)
  
-
 }
