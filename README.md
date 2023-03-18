@@ -101,7 +101,7 @@ bin_1,bin_2          The interacting region of the bin pair.
 test.statistic       The statistic given by KS/CVM test.
 pvalue               P value of hypothesis testing of H0 (underlying whether a bin pair 
                      is a DCI).
-pvalue.adj.FDR       Adjusted P value of H0's pvalue using Benjamini & Hochberg's method.
+pvalue.adj           Adjusted P value of H0's pvalue using Benjamini & Hochberg's method.
 ```
 
 Example: The data getting from chr11 of oocyte and zygote cells with resolution=200kb (Flyamer et.al.) were untilized as sample data. In the sample data file, it lists all bin pairs with at least one non-zero counts in one of cell types. The first two columns represent the interacting region of each listed bin pair, then followed 86 columns denote the normalized read counts for oocyte cells and the last 34 columns denote the normalized read counts for zygote cells.
@@ -115,6 +115,8 @@ result.ks <- scHiCDiff.KS(count.table,group)
 result.cvm <- scHiCDiff.CVM(count.table,group)
 result.nb <- scHiCDiff.NB(count.table,group)
 result.zinb <- scHiCDiff.ZINB(count.table,group)
+#common DCIs identified by four methods
+common.DCIs <- scHiCDiff.common.DCI(result.ks,result.cvm,result.nb,result.zinb)
 ```
 
 
