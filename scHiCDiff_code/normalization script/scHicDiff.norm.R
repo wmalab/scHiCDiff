@@ -29,7 +29,7 @@
 
 
 
-scHiCNorm.adjust <- function(bias.info.path,dat_HiC){
+scHiCDiff.norm <- function(bias.info.path,dat_HiC){
 library(HiCcompare)
 
 scHicNorm <- function(bias.info.path,dat_HiC,method.num=6,diag.log=FALSE){
