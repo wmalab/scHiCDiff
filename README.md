@@ -108,9 +108,9 @@ Example: The data getting from chr11 of oocyte and zygote cells with resolution=
 
 
 ```
-count.table <- read.table(paste("path/sampledata/oocyte.zygote.filtered.chr11.txt")
+count.table <- read.table(paste("path/sampledata/oocyte.zygote.chr19.txt")
 count.table <- as.matrix(count.table)
-group <- factor(c(rep(1,86), rep(2,34)))
+group <- factor(c(rep(1,89), rep(2,54)))
 result.ks <- scHiCDiff.KS(count.table,group)
 result.cvm <- scHiCDiff.CVM(count.table,group)
 result.nb <- scHiCDiff.NB(count.table,group)
