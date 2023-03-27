@@ -74,7 +74,7 @@ pvalue               P value of hypothesis testing of H0 (underlying whether a b
 pvalue.adj           Adjusted P value of H0's pvalue using Benjamini & Hochberg's method.
 ```
 
-Example: The data getting from chr11 of oocyte and zygote cells with resolution=200kb (Flyamer et.al.) were untilized as sample data. In the sample data file, it lists all bin pairs with at least one non-zero counts in one of cell types. The first two columns represent the interacting region of each listed bin pair, then followed 89 columns denote the normalized read counts for oocyte cells and the last 54 columns denote the normalized read counts for zygote cells.
+Example: The data getting from chr19 of oocyte and zygote cells with resolution=200kb (Flyamer et.al.) were untilized as sample data. In the sample data file, it lists all bin pairs with at least one non-zero counts in one of cell types. The first two columns represent the interacting region of each listed bin pair, then followed 89 columns denote the normalized read counts for oocyte cells and the last 54 columns denote the normalized read counts for zygote cells.
 
 
 ```
