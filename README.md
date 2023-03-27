@@ -23,9 +23,6 @@ The functions in scHiCDiff can be classified as two types: The first type is the
 
 The inputs of the normalization function scHiCDiff.norm are illustrated below:
 
-```
-  The pathway of the three local features (effective length,GC content and mappability of fragment ends) of all bins. The generation of these items is available at http://dna.cs.miami.edu/scHiCNorm.
-
 ``` 
 bias.info.path      The pathway of the three local features (effective length,GC content and mappability of fragment ends) of all bins. The generation of these items is available at http://dna.cs.miami.edu/scHiCNorm.
 dat_HiC              A N*N scHi-C matrix
