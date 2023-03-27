@@ -1,67 +1,38 @@
 # scHiCDiff
 
-scHiCDiff is a novel statistical algorithm to detect differential chromatin interactions (DCIs) between two Hi-C experiments at single-cell level. Here, we introduced 5 ways to capture the DCIs: two non-parametric tests (Kolmogorov–Smirnov test/ Cramér-von Mises test) and parametric likelihood ratio test with three regression models (Negative Binomial/ Zero-inflated Negative Binomial). Non-parametric tests are advantageous by allowing us detecting DCIs without any assumption on data distribution; negative binomial(NB) is the most common assumption for interaction counts in bulk Hi-C parametric approaches, while zero-inflated Negative Binomial(ZINB) regression models is specially designated for the interaction comparison at single-cell level by taking the excessive zeros feature into consideration.
+scHiCDiff is a novel statistical algorithm to detect differential chromatin interactions (DCIs) between two Hi-C experiments at single-cell level. Here, we introduced 4 ways to capture the DCIs: two non-parametric tests (Kolmogorov–Smirnov test/ Cramér-von Mises test) and parametric likelihood ratio test with two regression models (Negative Binomial/ Zero-inflated Negative Binomial). Non-parametric tests are advantageous by allowing us detecting DCIs without any assumption on data distribution; negative binomial(NB) is the most common assumption for interaction counts in bulk Hi-C parametric approaches, while zero-inflated Negative Binomial(ZINB) regression models is specially designated for the interaction comparison at single-cell level by taking the excessive zeros feature into consideration.
 
 
 # Installation
 
-To accelerate data processing and use as less memory as possible, scHiCDiff requires the Matrix pacakges. For specific Hi-C data processing, we tend to use the HiTC, HiCcompare pacakges. For non-parametric tests, we utilize the R package twosamples to perform. In addition, to fit the regression models, we also need the R packages ggsci, VGAM etc.
-
-Thus, with the installation of packages Matrix, mvtnorm, HiTC, HiCcompare, edgeR, ggsci, pscl, VGAM, maxLik, countreg and gamlss, the source code can be performed under R language version 4.0.2.
+To install and load the developmental version of scHiCDiff in R:
 
 ```
-require(Matrix)
-require(mvtnorm)
-require(HiTC)
-require(HiCcompare)
-require(edgeR)
-require(ggsci)
-require(pscl)
-require(VGAM)
-require(maxLik)
-require(countreg)
-require(gamlss)
-require(twosamples)
+
+install.packages("path/scHiCDiff_1.0.tar.gz", repos = NULL, type ="source")
+library(scHiCDiff)
 
 ```
 
 
 # Usage
 
-The functions in scHiCDiff can be classified as two types: The first type is the simulation function (scHiCDiff.sim) and the other type is the detection function (scHiCDiff.KS, scHiCDiff.CVM, scHiCDiff.NB and scHiCDiff.ZINB). 
+The functions in scHiCDiff can be classified as two types: The first type is the normalization function (scHiCDiff.sim) and the other type is the detection function (scHiCDiff.KS, scHiCDiff.CVM, scHiCDiff.NB and scHiCDiff.ZINB). 
 
-## Simulation Function
+## Normalization Function
 
-The inputs of the simulation function scHiCDiff.sim are illustrated below:
-
-```
-file.path       The pathway of single cell files. All scHi-C data used in simulation
-                should be stored in this pathway. Each scHi-C file is performed as 
-                three-column format containing the first interacting region of the bin 
-                pair, the second interacting region of the bin pair and the interaction 
-                frequency of the bin pair.
-fold.change     The amount of fold change.
-resolution      The resolution of singel-cell HiC data, eg:200kb will input 200,000
-sample.num      The number of single cells tending to generate in each condition.
-                (<= the number of inputted singel cells)
-pDiff           The probability that an interaction will be differential.
-```
-
-The function returns a list that contains the simulated replicates and the matrix of the true DCI regions. The list contains the following elements:
+The inputs of the normalization function scHiCDiff.norm are illustrated below:
 
 ```
-Hic1.sim        A list containing the simulated scHi-C matrices of the first condition.
-Hic2.sim        A list containing the simulated scHi-C matrices of the second condition.
-diff.sim        A sparceMatric containing the position of the differential interactions.
+  The pathway of the three local features (effective length,GC content and mappability of fragment ends) of all bins. The generation of these items is available at http://dna.cs.miami.edu/scHiCNorm.
+
+``` 
+bias.info.path      The pathway of the three local features (effective length,GC content and mappability of fragment ends) of all bins. The generation of these items is available at http://dna.cs.miami.edu/scHiCNorm.
+dat_HiC              A N*N scHi-C matrix
 ```
 
+The function returns the normalized Hi-C matrix.
 
-Simulation Example: The simulation test data is a dataset with 8 single-cells getting from chr1 of Diploid ESC cultured with 2i in Nagano et al. with resolution=200kb.
-
-```
-data.file <- "path/sampledata/sim.test.data"
-simRes <- scHiCDiff.sim(data.file,fold.change=5)
-```
 
 
 
@@ -78,7 +49,7 @@ group            A vector of factor which mentions the two condition to be compa
 
 The detection function will return a data frame containing the differential chromatin interaction (DCI) analysis results, rows are bin pairs and columns lists the related statistics.
 
-The outputs for the three parametric models are listed below:
+The outputs for the two parametric models are listed below:
 
 ```
 bin_1,bin_2          The interacting region of the bin pair.
@@ -104,7 +75,7 @@ pvalue               P value of hypothesis testing of H0 (underlying whether a b
 pvalue.adj           Adjusted P value of H0's pvalue using Benjamini & Hochberg's method.
 ```
 
-Example: The data getting from chr11 of oocyte and zygote cells with resolution=200kb (Flyamer et.al.) were untilized as sample data. In the sample data file, it lists all bin pairs with at least one non-zero counts in one of cell types. The first two columns represent the interacting region of each listed bin pair, then followed 86 columns denote the normalized read counts for oocyte cells and the last 34 columns denote the normalized read counts for zygote cells.
+Example: The data getting from chr11 of oocyte and zygote cells with resolution=200kb (Flyamer et.al.) were untilized as sample data. In the sample data file, it lists all bin pairs with at least one non-zero counts in one of cell types. The first two columns represent the interacting region of each listed bin pair, then followed 89 columns denote the normalized read counts for oocyte cells and the last 54 columns denote the normalized read counts for zygote cells.
 
 
 ```
