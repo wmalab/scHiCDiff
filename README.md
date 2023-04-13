@@ -13,7 +13,9 @@ install.packages("path/scHiCDiff_1.0.tar.gz", repos = NULL, type ="source")
 library(scHiCDiff)
 
 ```
+# License
 
+License: GPL-2
 
 # Usage
 
