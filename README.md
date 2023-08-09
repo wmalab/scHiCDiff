@@ -15,7 +15,7 @@ library(scHiCDiff)
 ```
 # License
 
- GPL-2
+ MIT
 
 # Usage
 
