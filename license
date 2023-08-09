@@ -1,8 +1,9 @@
-GPL-2 License
+The MIT License (MIT)
 
 
-You may copy, distribute and modify the software as long as you track changes/dates in source files, 
+You may use, copy, merge, distribute and modify the software as long as you track changes/dates in source files, 
 but you need to state any significant changes made to the original software when you revise the software.
-Any modifications to or software including (via compiler) GPL-licensed code must also be made available 
-under the GPL along with build & install instructions.
+Any modifications to or software including (via compiler) MIT-licensed code must also be made available along 
+with build & install instructions.
+
 
